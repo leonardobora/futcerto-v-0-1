@@ -14,7 +14,7 @@ const COURTS = [
     location: "Rua das Palmeiras, 123",
     price: "R$ 120",
     maxPlayers: 12,
-    coordinates: [-46.6388, -23.5489],
+    coordinates: [-46.6388, -23.5489] as [number, number],
     imageUrl: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
   {
@@ -23,7 +23,7 @@ const COURTS = [
     location: "Av. Principal, 456",
     price: "R$ 100",
     maxPlayers: 10,
-    coordinates: [-46.6488, -23.5589],
+    coordinates: [-46.6488, -23.5589] as [number, number],
     imageUrl: "https://images.unsplash.com/photo-1624880357913-a8539238245b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
   {
@@ -32,7 +32,7 @@ const COURTS = [
     location: "Rua do Esporte, 789",
     price: "R$ 150",
     maxPlayers: 14,
-    coordinates: [-46.6288, -23.5389],
+    coordinates: [-46.6288, -23.5389] as [number, number],
     imageUrl: "https://images.unsplash.com/photo-1524015368236-cf67f6b6f1f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
 ];
