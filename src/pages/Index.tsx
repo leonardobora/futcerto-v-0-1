@@ -33,7 +33,7 @@ const COURTS = [
     price: "R$ 160",
     maxPlayers: 14,
     coordinates: [-49.2433, -25.3984] as [number, number],
-    imageUrl: "https://images.unsplash.com/photo-1524015368236-cf67f6b6f1f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
+    imageUrl: "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
 ];
 
