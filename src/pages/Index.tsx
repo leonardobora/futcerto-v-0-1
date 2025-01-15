@@ -6,33 +6,33 @@ import CourtsMap from "@/components/CourtsMap";
 import { Button } from "@/components/ui/button";
 import { UserPlus } from "lucide-react";
 
-// Dados mockados para exemplo
+// Dados mockados de quadras em Curitiba
 const COURTS = [
   {
     id: 1,
-    name: "Arena Soccer Pro",
-    location: "Rua das Palmeiras, 123",
-    price: "R$ 120",
-    maxPlayers: 12,
-    coordinates: [-46.6388, -23.5489] as [number, number],
+    name: "Arena Soccer Barigui",
+    location: "R. Padre Agostinho, 2485 - Bigorrilho",
+    price: "R$ 200",
+    maxPlayers: 14,
+    coordinates: [-49.2933, -25.4284] as [number, number],
     imageUrl: "https://images.unsplash.com/photo-1529900748604-07564a03e7a6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 2,
-    name: "Futsal Center",
-    location: "Av. Principal, 456",
-    price: "R$ 100",
-    maxPlayers: 10,
-    coordinates: [-46.6488, -23.5589] as [number, number],
+    name: "Soccer Hall",
+    location: "R. Brasílio Itiberê, 3279 - Água Verde",
+    price: "R$ 180",
+    maxPlayers: 14,
+    coordinates: [-49.2833, -25.4484] as [number, number],
     imageUrl: "https://images.unsplash.com/photo-1624880357913-a8539238245b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
   {
     id: 3,
-    name: "Gol & Cia",
-    location: "Rua do Esporte, 789",
-    price: "R$ 150",
+    name: "CT Bacacheri",
+    location: "R. Costa Rica, 313 - Bacacheri",
+    price: "R$ 160",
     maxPlayers: 14,
-    coordinates: [-46.6288, -23.5389] as [number, number],
+    coordinates: [-49.2433, -25.3984] as [number, number],
     imageUrl: "https://images.unsplash.com/photo-1524015368236-cf67f6b6f1f1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80"
   },
 ];
@@ -54,7 +54,7 @@ const Index = () => {
           <div>
             <h1 className="text-3xl font-bold text-white">Futcerto</h1>
             <p className="text-primary-foreground/80 mt-2">
-              Encontre e reserve as melhores quadras para seu futebol
+              Encontre e reserve as melhores quadras de Curitiba
             </p>
           </div>
           <Button 

@@ -23,14 +23,14 @@ const CourtsMap = ({ courts, onSelectCourt }: CourtsMapProps) => {
   useEffect(() => {
     if (!mapContainer.current) return;
 
-    // Initialize map with your token
+    // Initialize map with Curitiba's coordinates
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbmFyZG9ib3JhIiwiYSI6ImNtNXh2anR5NDA2bGQya29venNtdnRvMTkifQ.3lXFg1NQotmr9cTi5OhaOg';
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: 'mapbox://styles/mapbox/streets-v12',
-      center: [-46.6388, -23.5489], // São Paulo
-      zoom: 11
+      center: [-49.2733, -25.4284], // Curitiba coordinates
+      zoom: 12 // Increased zoom for better city view
     });
 
     // Add navigation controls
