@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { MapPin } from 'lucide-react';
@@ -19,21 +19,12 @@ interface CourtsMapProps {
 const CourtsMap = ({ courts, onSelectCourt }: CourtsMapProps) => {
   const mapContainer = useRef<HTMLDivElement>(null);
   const map = useRef<mapboxgl.Map | null>(null);
-  const [mapboxToken, setMapboxToken] = useState<string>('');
 
   useEffect(() => {
-    // Temporary input for Mapbox token
-    const token = prompt('Por favor, insira seu token público do Mapbox para visualizar o mapa. Você pode obtê-lo em https://mapbox.com/');
-    if (token) {
-      setMapboxToken(token);
-    }
-  }, []);
+    if (!mapContainer.current) return;
 
-  useEffect(() => {
-    if (!mapContainer.current || !mapboxToken) return;
-
-    // Initialize map
-    mapboxgl.accessToken = mapboxToken;
+    // Initialize map with your token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGVvbmFyZG9ib3JhIiwiYSI6ImNtNXh2anR5NDA2bGQya29venNtdnRvMTkifQ.3lXFg1NQotmr9cTi5OhaOg';
     
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
@@ -80,16 +71,11 @@ const CourtsMap = ({ courts, onSelectCourt }: CourtsMapProps) => {
     return () => {
       map.current?.remove();
     };
-  }, [courts, onSelectCourt, mapboxToken]);
+  }, [courts, onSelectCourt]);
 
   return (
     <div className="relative w-full h-[400px] rounded-lg overflow-hidden">
       <div ref={mapContainer} className="absolute inset-0" />
-      {!mapboxToken && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-          <p className="text-gray-500">Insira um token do Mapbox para visualizar o mapa</p>
-        </div>
-      )}
     </div>
   );
 };
