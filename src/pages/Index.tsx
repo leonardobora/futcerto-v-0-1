@@ -21,7 +21,7 @@ const Index = () => {
 
   // Update useCourts to pass filters once the hook is modified
   const { data: courts = [], isLoading: courtsLoading, error: courtsError } = useCourts({ searchTerm, priceFilter, capacityFilter });
-
+  
   const { user, profile, signOut, loading: authLoading } = useAuth();
   const { toast } = useToast();
 
@@ -29,7 +29,7 @@ const Index = () => {
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   // Assuming RegisterModal might be added back or handled differently, keeping state for now
-  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
+  const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false); 
 
 
   const handleBookClick = (court: { id: number; name: string; price: number }) => {
@@ -103,7 +103,7 @@ const Index = () => {
               </>
             ) : (
               <>
-                <Button
+                <Button 
                   onClick={() => setIsAuthModalOpen(true)}
                   variant="secondary"
                   size="sm"
@@ -121,7 +121,7 @@ const Index = () => {
       {/* Filters Section */}
       <div className="bg-gray-100 py-4 shadow">
         <div className="container mx-auto px-4 flex flex-col sm:flex-row flex-wrap gap-4 items-center">
-          <Input
+          <Input 
             placeholder="Buscar por nome ou local..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -132,7 +132,7 @@ const Index = () => {
               <SelectValue placeholder="Preço" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">Qualquer Preço</SelectItem>
+              <SelectItem value="all">Qualquer Preço</SelectItem> 
               <SelectItem value="0-50">Até R$50</SelectItem>
               <SelectItem value="51-100">R$51 - R$100</SelectItem>
               <SelectItem value="101-Infinity">Acima de R$100</SelectItem>
@@ -146,7 +146,7 @@ const Index = () => {
               <SelectItem value="all">Qualquer Capacidade</SelectItem>
               <SelectItem value="10">5v5 (Até 10 jogadores)</SelectItem>
               <SelectItem value="14">7v7 (Até 14 jogadores)</SelectItem>
-              <SelectItem value="22">Futebol Society (Até 22)</SelectItem>
+              <SelectItem value="22">Futebol Society (Até 22)</SelectItem> 
               {/* Consider making this dynamic or more comprehensive */}
             </SelectContent>
           </Select>
@@ -168,7 +168,7 @@ const Index = () => {
               {courtsLoading && !courtsError ? (
                  <Skeleton className="h-full w-full" />
               ) : (
-                <CourtsMap
+                <CourtsMap 
                   courts={mapCourts}
                   onSelectCourt={(court) => handleBookClick({id: court.id, name: court.name, price: courts.find(c=>c.id === court.id)?.price_per_hour || 0})}
                 />
@@ -243,9 +243,9 @@ const Index = () => {
         }}
       />
       {/* If RegisterModal is a separate component:
-      <RegisterModal
-        isOpen={isRegisterModalOpen}
-        onClose={() => setIsRegisterModalOpen(false)}
+      <RegisterModal 
+        isOpen={isRegisterModalOpen} 
+        onClose={() => setIsRegisterModalOpen(false)} 
         onLoginClick={() => {
           setIsRegisterModalOpen(false);
           setIsAuthModalOpen(true);

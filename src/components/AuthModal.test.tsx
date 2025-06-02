@@ -126,7 +126,7 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
 
       // Submit the form
       await userEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
-
+      
       // Verify supabase.auth.signUp was called
       expect(supabase.auth.signUp).toHaveBeenCalledWith({
         email: 'player@example.com',
@@ -202,7 +202,7 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
       if (userTypeSelectionButton) { // Check if user type selection is even there
           await userEvent.click(userTypeSelectionButton);
       }
-
+      
       const cadastrarButton = screen.getByRole('button', { name: /cadastrar/i, exact: true });
       expect(cadastrarButton).toBeInTheDocument(); // Confirm submit button is there
 
@@ -211,7 +211,7 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
       // However, if it does submit (e.g. if required attributes are missing or e.preventDefault() is mishandled),
       // then Supabase call should not happen, and a toast might appear from custom logic if any.
       // AuthModal's handleSubmit has its own checks too.
-
+      
       // The `required` attribute on inputs should prevent `handleSubmit` from being called by a click.
       // `userEvent.click` respects this. So, `supabase.auth.signUp` should not be called.
       // We won't see a toast here from `handleSubmit` because the form submission itself is blocked by browser validation.
@@ -240,7 +240,7 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
       await userEvent.type(screen.getByLabelText(/^senha$/i), 'password123');
       await userEvent.type(screen.getByLabelText(/telefone/i), '1234567890');
       await userEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
-
+      
       await waitFor(() => {
         expect(screen.getByText(/erro no cadastro/i)).toBeInTheDocument();
         expect(screen.getByText(/supabase sign-up error/i)).toBeInTheDocument();
@@ -249,9 +249,9 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
 
     it('shows an error toast if profile creation fails', async () => {
       // SignUp succeeds, but profile insert fails
-      (supabase.auth.signUp as vi.Mock).mockResolvedValueOnce({
-        data: { user: { id: 'new-user-id', email: 'profilefail@example.com' }, session: {} },
-        error: null
+      (supabase.auth.signUp as vi.Mock).mockResolvedValueOnce({ 
+        data: { user: { id: 'new-user-id', email: 'profilefail@example.com' }, session: {} }, 
+        error: null 
       });
       const insertMock = vi.fn().mockResolvedValueOnce({ error: { message: 'Profile creation failed' } });
       (supabase.from as vi.Mock).mockReturnValueOnce({ insert: insertMock });
@@ -314,12 +314,12 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
       await waitFor(() => {
         expect(screen.getByText(/login realizado com sucesso!/i)).toBeInTheDocument();
       });
-
+      
       // Modal should close
       await waitFor(() => {
         expect(screen.queryByRole('button', { name: /entrar/i })).not.toBeInTheDocument();
       });
-
+      
       // Optionally, verify user state in context if TestApp exposes it or has effects based on it
       // For example, if a "Sign Out" button appears:
       // await waitFor(() => {
@@ -355,13 +355,13 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
           <TestApp />
         </MemoryRouter>
       );
-
+      
       // Ensure login tab is active (should be by default)
       const loginButton = screen.getByRole('button', { name: /entrar/i });
       expect(loginButton).toBeInTheDocument();
 
       await userEvent.click(loginButton); // Attempt to submit empty form
-
+      
       expect(supabase.auth.signInWithPassword).not.toHaveBeenCalled();
       // HTML5 validation should prevent the call. No specific toast for empty fields is designed in handleSubmit for login.
     });
@@ -399,11 +399,11 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
           data: { subscription: { unsubscribe: vi.fn() } },
         };
       });
-
+      
       render(
         <MemoryRouter>
           {/* Ensure InnerTestApp is rendered so the Sign Out button can be found */}
-          <TestApp modalOpenInitially={true} />
+          <TestApp modalOpenInitially={true} /> 
         </MemoryRouter>
       );
 
@@ -422,7 +422,7 @@ describe('AuthModal E2E Tests with AuthProvider', () => {
           expect(screen.queryByRole('tab', { name: /login/i })).not.toBeInTheDocument();
         });
       }
-
+      
       // Now click the sign-out button
       const signOutButton = screen.getByRole('button', { name: /sign out test button/i });
       await userEvent.click(signOutButton);

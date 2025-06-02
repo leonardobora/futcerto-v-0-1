@@ -113,12 +113,12 @@ const ProfilePage: React.FC = () => {
       </div>
     );
   }
-
+  
   const userTypeMap: { [key: string]: string } = {
     player: 'Jogador',
     manager: 'Gestor de Quadra',
   };
-
+  
   const bookingStatusMap: { [key: string]: { text: string; variant: "default" | "destructive" | "outline" | "secondary" | "ghost" | null | undefined } } = {
     confirmed: { text: 'Confirmada', variant: 'default' },
     pending: { text: 'Pendente', variant: 'secondary' },
@@ -205,3 +205,4 @@ const ProfilePage: React.FC = () => {
 };
 
 export default ProfilePage;
+

@@ -178,10 +178,10 @@ describe('BookingModal', () => {
       // User profile/name is not displayed in this modal, so no need to wait for 'Test User'
 
       await userEvent.click(screen.getByRole('button', { name: /confirmar reserva/i }));
-
+      
       await waitFor(() => {
         // Check for the toast title first, then the specific description
-        expect(screen.getByText(/erro na reserva/i)).toBeInTheDocument();
+        expect(screen.getByText(/erro na reserva/i)).toBeInTheDocument(); 
         expect(screen.getByText("Por favor selecione data e horário")).toBeInTheDocument();
       });
       expect(mockSupabaseFromInstance.insert).not.toHaveBeenCalled();
@@ -214,14 +214,14 @@ describe('BookingModal', () => {
       const onCloseMock = vi.fn();
       const mockBookingId = 'booking-success-123';
       mockSupabaseInsertSingle.mockResolvedValueOnce({
-        data: {
-          id: mockBookingId,
-          court_id: 1,
+        data: { 
+          id: mockBookingId, 
+          court_id: 1, 
           user_id: mockAuthedUser.id, // Ensure this is player_id in your DB
           booking_date: '2024-07-30', // This will be the selected date
-          start_time: '10:00',
+          start_time: '10:00', 
           end_time: '11:00', // Calculated
-          status: 'confirmed'
+          status: 'confirmed' 
         },
         error: null,
       });
@@ -236,7 +236,7 @@ describe('BookingModal', () => {
       );
       if (!firstEnabledDay) throw new Error("No enabled date found in calendar");
       await userEvent.click(firstEnabledDay);
-
+      
       // Select a time
       const timeSelectTrigger = screen.getByRole('combobox');
       await userEvent.click(timeSelectTrigger);
@@ -254,7 +254,7 @@ describe('BookingModal', () => {
             name: mockAuthedUser.user_metadata.name,
             phone: mockAuthedUser.user_metadata.phone,
             // date will be dynamic based on selection, check for presence
-            booking_date: expect.any(String),
+            booking_date: expect.any(String), 
             start_time: '10:00',
             end_time: '11:00', // Assuming 1hr duration
             total_price: 75, // courtPrice
@@ -272,7 +272,7 @@ describe('BookingModal', () => {
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
         `http://localhost:3000/reserva/${mockBookingId}` // Default port is 5173 for Vite, ensure this matches
       );
-
+      
       // Verify onClose call
       expect(onCloseMock).toHaveBeenCalledTimes(1);
     });

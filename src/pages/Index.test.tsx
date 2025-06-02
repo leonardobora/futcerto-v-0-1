@@ -119,23 +119,23 @@ describe('IndexPage Filter Functionality', () => {
   it('2. Search Term Filter: filters courts by name', async () => {
     const searchTerm = 'Central';
     const expectedFilteredCourts = allMockCourts.filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()));
-
+    
     const courtsMock = vi.fn((filters) => {
       if (filters.searchTerm === searchTerm) {
         return { data: expectedFilteredCourts, isLoading: false, error: null };
       }
       return { data: allMockCourts, isLoading: false, error: null };
     });
-
+    
     renderIndexPage(undefined, courtsMock);
-
+    
     const searchInput = screen.getByPlaceholderText(/buscar por nome ou local.../i);
     await userEvent.type(searchInput, searchTerm);
 
     await waitFor(() => {
       expect(courtsMock).toHaveBeenCalledWith(expect.objectContaining({ searchTerm }));
     });
-
+    
     await waitFor(() => {
       expect(screen.getAllByTestId('court-card')).toHaveLength(expectedFilteredCourts.length);
       expect(screen.getByText('Quadra Central')).toBeInTheDocument();
@@ -159,7 +159,7 @@ describe('IndexPage Filter Functionality', () => {
     expect(priceSelectTrigger).toBeInTheDocument();
     await userEvent.click(priceSelectTrigger!);
     await userEvent.click(screen.getByRole('option', { name: /até r\$50/i }));
-
+    
     await waitFor(() => {
       expect(courtsMock).toHaveBeenCalledWith(expect.objectContaining({ priceFilter: priceFilterValue }));
     });
@@ -175,7 +175,7 @@ describe('IndexPage Filter Functionality', () => {
   it('4. Capacity Filter: filters courts by capacity (5v5 - Max 10)', async () => {
     const capacityFilterValue = '10';
     const expectedFilteredCourts = allMockCourts.filter(c => c.max_players === 10);
-
+    
     const courtsMock = vi.fn((filters) => {
       if (filters.capacityFilter === capacityFilterValue) {
         return { data: expectedFilteredCourts, isLoading: false, error: null };
@@ -184,7 +184,7 @@ describe('IndexPage Filter Functionality', () => {
     });
 
     renderIndexPage(undefined, courtsMock);
-
+    
     const capacitySelectTrigger = screen.getByText('Capacidade (Max.)').closest('button');
     expect(capacitySelectTrigger).toBeInTheDocument();
     await userEvent.click(capacitySelectTrigger!);
@@ -204,10 +204,10 @@ describe('IndexPage Filter Functionality', () => {
 
   it('5. Combined Filters: search term, price, and capacity', async () => {
     const searchTerm = 'Quadra';
-    const priceFilterValue = '0-50';
+    const priceFilterValue = '0-50'; 
     const capacityFilterValue = '10';
-
-    const expectedFilteredCourts = allMockCourts.filter(c =>
+    
+    const expectedFilteredCourts = allMockCourts.filter(c => 
       (c.name.toLowerCase().includes(searchTerm.toLowerCase()) || c.location.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (c.price_per_hour >= 0 && c.price_per_hour <= 50) &&
       c.max_players === parseInt(capacityFilterValue)
@@ -247,7 +247,7 @@ describe('IndexPage Filter Functionality', () => {
     await waitFor(() => {
       expect(courtsMock).toHaveBeenCalledWith({ searchTerm, priceFilter: priceFilterValue, capacityFilter: capacityFilterValue });
     });
-
+    
     await waitFor(() => {
       if (expectedFilteredCourts.length > 0) {
         expect(screen.getAllByTestId('court-card')).toHaveLength(expectedFilteredCourts.length);
@@ -260,7 +260,7 @@ describe('IndexPage Filter Functionality', () => {
       }
     });
   });
-
+  
   it('6. Clearing Filters: shows all courts after clearing a filter', async () => {
     const searchTerm = 'Central';
     const courtsMock = vi.fn((filters) => {
@@ -276,12 +276,12 @@ describe('IndexPage Filter Functionality', () => {
       }
       return { data: [], isLoading: false, error: null }; // Fallback for other combinations
     });
-
+    
     renderIndexPage(undefined, courtsMock);
 
     const searchInput = screen.getByPlaceholderText(/buscar por nome ou local.../i);
     await userEvent.type(searchInput, searchTerm);
-
+    
     await waitFor(() => expect(courtsMock).toHaveBeenCalledWith(expect.objectContaining({ searchTerm })));
     await waitFor(() => expect(screen.getAllByTestId('court-card')).toHaveLength(1));
 

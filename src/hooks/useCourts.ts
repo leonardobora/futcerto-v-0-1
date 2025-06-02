@@ -57,7 +57,7 @@ export const useCourts = (filters: CourtFilters = {}) => {
           query = query.eq('max_players', capacity);
         }
       }
-
+      
       query = query.order('name');
 
       const { data, error } = await query;

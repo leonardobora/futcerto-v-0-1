@@ -53,12 +53,12 @@ vi.mock('@/lib/supabaseClient', async (importOriginal) => {
           // The result of the *second* order() call is what's awaited by useQuery's queryFn.
           // So, the second order property must hold the mock function that returns a Promise.
           const secondOrderCall = mockSupabaseBookingsChainEnd;
-
+          
           // The result of the *first* order() call must be an object that has an 'order' method.
           const firstOrderCallResult = {
-            order: secondOrderCall,
+            order: secondOrderCall, 
           };
-
+          
           // The result of .eq() must be an object that has an 'order' method.
           const eqCallResult = {
             order: vi.fn(() => firstOrderCallResult),
@@ -113,9 +113,9 @@ const queryClient = new QueryClient({
 
 const renderProfilePage = (authContextValue: Partial<AuthContextType>) => {
   (useAuth as vi.Mock).mockReturnValue({ user: null, profile: null, session: null, loading: true, ...authContextValue });
-
+ 
   // Mock implementations will be set in each test or beforeEach.
-
+  
   return render(
     <QueryClientProvider client={queryClient}>
       <MemoryRouter>
@@ -130,7 +130,7 @@ const renderProfilePage = (authContextValue: Partial<AuthContextType>) => {
 describe('ProfilePage', () => {
   beforeEach(() => {
     queryClient.clear(); // Clear query cache before each test
-    vi.clearAllMocks();
+    vi.clearAllMocks(); 
 
     // Reset mocks to default promise-returning functions before each test
     mockSupabaseProfileSingle.mockImplementation(() => Promise.resolve({ data: null, error: new Error("Profile mock not explicitly set for this test") }));
@@ -150,8 +150,8 @@ describe('ProfilePage', () => {
   it('displays profile and bookings successfully when user is logged in', async () => {
     (useAuth as vi.Mock).mockReturnValue({ user: mockUser, profile: mockProfileData, session: {}, loading: false });
     mockSupabaseProfileSingle.mockResolvedValue({ data: mockProfileData, error: null });
-    mockSupabaseBookingsChainEnd.mockResolvedValue({ data: mockBookingsData, error: null });
-
+    mockSupabaseBookingsChainEnd.mockResolvedValue({ data: mockBookingsData, error: null }); 
+    
     renderProfilePage({ user: mockUser, loading: false });
 
     // Profile assertions
@@ -173,7 +173,7 @@ describe('ProfilePage', () => {
     (useAuth as vi.Mock).mockReturnValue({ user: mockUser, profile: mockProfileData, session: {}, loading: false });
     mockSupabaseProfileSingle.mockResolvedValue({ data: mockProfileData, error: null });
     mockSupabaseBookingsChainEnd.mockResolvedValue({ data: [], error: null }); // Empty array for bookings
-
+    
     renderProfilePage({ user: mockUser, loading: false });
 
     await waitFor(() => expect(screen.getByText(mockProfileData.name)).toBeInTheDocument()); // Profile loads
@@ -185,7 +185,7 @@ describe('ProfilePage', () => {
       (useAuth as vi.Mock).mockReturnValue({ user: mockUser, profile: null, session: {}, loading: false });
       mockSupabaseProfileSingle.mockImplementation(() => new Promise(() => {})); // Keep profile promise pending
       mockSupabaseBookingsChainEnd.mockResolvedValue({ data: [], error: null }); // Bookings can resolve
-
+      
       renderProfilePage({ user: mockUser, loading: false });
 
       // Check for profile skeletons
@@ -201,7 +201,7 @@ describe('ProfilePage', () => {
       (useAuth as vi.Mock).mockReturnValue({ user: mockUser, profile: mockProfileData, session: {}, loading: false });
       mockSupabaseProfileSingle.mockResolvedValue({ data: mockProfileData, error: null }); // Profile resolves
       mockSupabaseBookingsChainEnd.mockImplementation(() => new Promise(() => {})); // Bookings promise is pending
-
+      
       renderProfilePage({ user: mockUser, loading: false });
 
       await waitFor(() => expect(screen.getByText(mockProfileData.name)).toBeInTheDocument()); // Profile loaded
@@ -216,8 +216,8 @@ describe('ProfilePage', () => {
     it('shows profile fetch error', async () => {
       (useAuth as vi.Mock).mockReturnValue({ user: mockUser, profile: null, session: {}, loading: false });
       mockSupabaseProfileSingle.mockRejectedValue(new Error('Failed to fetch profile'));
-      mockSupabaseBookingsChainEnd.mockResolvedValue({ data: [], error: null });
-
+      mockSupabaseBookingsChainEnd.mockResolvedValue({ data: [], error: null }); 
+      
       renderProfilePage({ user: mockUser, loading: false });
 
       await waitFor(() => expect(screen.getByText(/erro ao carregar perfil/i)).toBeInTheDocument());
@@ -228,7 +228,7 @@ describe('ProfilePage', () => {
       (useAuth as vi.Mock).mockReturnValue({ user: mockUser, profile: mockProfileData, session: {}, loading: false });
       mockSupabaseProfileSingle.mockResolvedValue({ data: mockProfileData, error: null });
       mockSupabaseBookingsChainEnd.mockRejectedValue(new Error('Failed to fetch bookings'));
-
+      
       renderProfilePage({ user: mockUser, loading: false });
 
       await waitFor(() => expect(screen.getByText(mockProfileData.name)).toBeInTheDocument()); // Profile loaded

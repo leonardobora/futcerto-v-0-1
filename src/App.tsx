@@ -6,7 +6,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
-import ProfilePage from "./pages/ProfilePage"; // Import ProfilePage
+import ProfilePage from "./pages/ProfilePage";
+import ManagerDashboardPage from "./pages/ManagerDashboardPage";
+import EditCourtPage from "./pages/EditCourtPage"; // Import EditCourtPage
 
 const queryClient = new QueryClient();
 
@@ -19,7 +21,9 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/profile" element={<ProfilePage />} /> {/* Add ProfilePage route */}
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/manager/dashboard" element={<ManagerDashboardPage />} />
+            <Route path="/manager/courts/:courtId/edit" element={<EditCourtPage />} /> {/* Add EditCourtPage route */}
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
