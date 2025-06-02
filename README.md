@@ -157,6 +157,36 @@ The application will be available at `http://localhost:8080`
 
 ---
 
+## 💻 Development Workflow
+
+This section outlines the common commands used during development:
+
+- **Run the development server**:
+  ```bash
+  npm run dev
+  ```
+  This will start the Vite development server with hot reloading, typically available at `http://localhost:8080`.
+
+- **Lint your code**:
+  ```bash
+  npm run lint
+  ```
+  This command runs ESLint to check for code quality and style issues.
+
+- **Build for production**:
+  ```bash
+  npm run build
+  ```
+  This compiles the application into static assets for deployment, usually in the `dist/` directory.
+
+- **Preview production build**:
+  ```bash
+  npm run preview
+  ```
+  This command serves the production build locally, allowing you to test it before deployment.
+
+---
+
 ## 📝 Available Scripts
 
 | Command | Description |
