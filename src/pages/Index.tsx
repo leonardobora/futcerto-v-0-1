@@ -4,15 +4,16 @@ import { BookingModal } from "@/components/BookingModal";
 import { AuthModal } from "@/components/AuthModal";
 import CourtsMap from "@/components/CourtsMap";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"; // Added
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"; // Added
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { UserPlus, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import { useCourts } from "@/hooks/useCourts"; // Will be updated to accept filters
+import { useCourts } from "@/hooks/useCourts";
 import { useToast } from "@/hooks/use-toast";
-import { Skeleton } from "@/components/ui/skeleton"; // Added for consistency
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"; // Added for consistency
-import { Link } from "react-router-dom"; // Added for profile link (though not strictly part of this task, good to have)
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [searchTerm, setSearchTerm] = useState('');
