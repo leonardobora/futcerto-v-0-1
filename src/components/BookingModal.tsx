@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
@@ -13,17 +12,18 @@ interface BookingModalProps {
   onClose: () => void;
   courtId: number;
   courtName: string;
+  courtPrice: number;
 }
 
-export const BookingModal = ({ isOpen, onClose, courtId, courtName }: BookingModalProps) => {
+export const BookingModal = ({ isOpen, onClose, courtId, courtName, courtPrice }: BookingModalProps) => {
   const [date, setDate] = useState<Date>();
   const [startTime, setStartTime] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
 
   const handleBooking = async () => {
-    if (!date || !startTime || !user) {
+    if (!date || !startTime || !user || !profile) {
       toast({
         title: "Erro na reserva",
         description: "Por favor selecione data e horário",
@@ -45,11 +45,14 @@ export const BookingModal = ({ isOpen, onClose, courtId, courtName }: BookingMod
         .insert([
           {
             court_id: courtId,
-            player_id: user.id,
+            user_id: user.id,
+            name: profile.name,
+            phone: profile.phone,
             booking_date: date.toISOString().split('T')[0],
             start_time: startTime,
             end_time: endTime,
-            status: 'confirmed'
+            total_price: courtPrice,
+            status: 'pending'
           }
         ])
         .select()

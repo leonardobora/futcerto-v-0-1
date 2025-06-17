@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { UserPlus, LogOut } from "lucide-react";
+import { UserPlus, LogOut, CreditCard } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCourts } from "@/hooks/useCourts";
 import { useToast } from "@/hooks/use-toast";
@@ -91,6 +91,12 @@ const Index = () => {
               <>
                 <Link to="/profile" className="text-sm text-white hover:underline">
                   Olá, {profile.name}!
+                </Link>
+                <Link to="/subscription">
+                  <Button variant="secondary" size="sm" className="gap-1.5">
+                    <CreditCard size={18} />
+                    Assinatura
+                  </Button>
                 </Link>
                 <Button 
                   onClick={handleSignOut}
