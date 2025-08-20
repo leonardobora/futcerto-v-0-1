@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase, isSupabaseConfigured } from "@/lib/supabaseClient";
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -23,7 +23,7 @@ export const BookingModal = ({ isOpen, onClose, courtId, courtName, courtPrice }
   const { user, profile } = useAuth();
 
   const handleBooking = async () => {
-    if (!date || !startTime || !user || !profile) {
+    if (!date || !startTime) {
       toast({
         title: "Erro na reserva",
         description: "Por favor selecione data e horário",
@@ -38,6 +38,28 @@ export const BookingModal = ({ isOpen, onClose, courtId, courtName, courtPrice }
       // Calculate end time (assuming 1 hour slots)
       const [hour] = startTime.split(':');
       const endTime = `${parseInt(hour) + 1}:00`;
+
+      if (!isSupabaseConfigured()) {
+        // Demo mode - simulate booking
+        console.warn('Demo mode: Simulating booking creation');
+        await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API delay
+        
+        toast({
+          title: "Reserva simulada!",
+          description: `Quadra ${courtName} reservada para ${date.toLocaleDateString()} às ${startTime} (modo demonstração)`,
+        });
+        onClose();
+        return;
+      }
+
+      if (!user || !profile) {
+        toast({
+          title: "Erro na reserva",
+          description: "Usuário não autenticado",
+          variant: "destructive",
+        });
+        return;
+      }
 
       // Create booking
       const { data, error } = await supabase

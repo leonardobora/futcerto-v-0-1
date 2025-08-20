@@ -1,6 +1,6 @@
 
 import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase, isSupabaseConfigured, mockCourts } from '@/lib/supabaseClient';
 
 export interface Court {
   id: number;
@@ -25,6 +25,44 @@ export const useCourts = (filters: CourtFilters = {}) => {
   return useQuery<Court[], Error>({ // Explicitly type useQuery for better type safety
     queryKey: ['courts', filters], // Include filters in queryKey
     queryFn: async (): Promise<Court[]> => {
+      // If Supabase is not configured, return mock data
+      if (!isSupabaseConfigured()) {
+        console.warn('Supabase not configured, using mock data for courts');
+        let filteredCourts = [...mockCourts];
+
+        // Apply search term filter
+        if (filters.searchTerm) {
+          const searchLower = filters.searchTerm.toLowerCase();
+          filteredCourts = filteredCourts.filter(court => 
+            court.name.toLowerCase().includes(searchLower) || 
+            court.location.toLowerCase().includes(searchLower)
+          );
+        }
+
+        // Apply price filter
+        if (filters.priceFilter && filters.priceFilter !== 'all') {
+          const [minPriceStr, maxPriceStr] = filters.priceFilter.split('-');
+          const minPrice = parseInt(minPriceStr, 10);
+          const maxPrice = maxPriceStr === 'Infinity' ? Infinity : parseInt(maxPriceStr, 10);
+
+          filteredCourts = filteredCourts.filter(court => {
+            if (!isNaN(minPrice) && court.price_per_hour < minPrice) return false;
+            if (!isNaN(maxPrice) && maxPrice !== Infinity && court.price_per_hour > maxPrice) return false;
+            return true;
+          });
+        }
+
+        // Apply capacity filter
+        if (filters.capacityFilter && filters.capacityFilter !== 'all') {
+          const capacity = parseInt(filters.capacityFilter, 10);
+          if (!isNaN(capacity)) {
+            filteredCourts = filteredCourts.filter(court => court.max_players === capacity);
+          }
+        }
+
+        return filteredCourts;
+      }
+
       let query = supabase.from('courts').select('*');
 
       // Apply search term filter
