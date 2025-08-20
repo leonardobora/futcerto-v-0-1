@@ -1,7 +1,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase, isSupabaseConfigured } from '@/lib/supabaseClient';
 
 interface Profile {
   id: string;
@@ -38,6 +38,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured, auth will work in demo mode');
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
@@ -67,6 +73,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const fetchProfile = async (userId: string) => {
+    if (!isSupabaseConfigured()) {
+      console.warn('Demo mode: Profile fetch requires Supabase configuration');
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -84,6 +96,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signUp = async (email: string, password: string, userData: Omit<Profile, 'id'>) => {
+    if (!isSupabaseConfigured()) {
+      console.warn('Demo mode: Sign up functionality requires Supabase configuration');
+      throw new Error('Cadastro não disponível no modo demonstração. Configure as variáveis de ambiente do Supabase.');
+    }
+
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -107,6 +124,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signIn = async (email: string, password: string) => {
+    if (!isSupabaseConfigured()) {
+      console.warn('Demo mode: Sign in functionality requires Supabase configuration');
+      throw new Error('Login não disponível no modo demonstração. Configure as variáveis de ambiente do Supabase.');
+    }
+
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -116,6 +138,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const signOut = async () => {
+    if (!isSupabaseConfigured()) {
+      console.warn('Demo mode: Sign out functionality requires Supabase configuration');
+      throw new Error('Logout não disponível no modo demonstração. Configure as variáveis de ambiente do Supabase.');
+    }
+
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   };
