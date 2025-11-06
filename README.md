@@ -4,6 +4,8 @@
 
 Futcerto is a modern web application that connects soccer players with available courts in Curitiba, Brazil. Built with React, TypeScript, and Supabase, it provides an intuitive platform for discovering, viewing, and booking soccer courts throughout the city.
 
+🌐 **[Visit our landing page](https://leonardobora.github.io/futcerto-v-0-1/)** to learn more about the project vision and potential!
+
 ---
 
 ## 🚀 Lovable Shipped Event - Season 1
@@ -263,6 +265,7 @@ Strict TypeScript configuration with path mapping and modern ES features enabled
 
 This project is optimized for deployment on:
 
+- **GitHub Pages**: Project showcase available at the `/docs` folder (visit the [landing page](https://leonardobora.github.io/futcerto-v-0-1/) to learn more about the project)
 - **Lovable**: Direct deployment via the Lovable platform
 - **Netlify**: Simple drag-and-drop or Git integration
 - **Vercel**: Zero-config deployment for React applications
