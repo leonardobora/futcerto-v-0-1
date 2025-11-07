@@ -180,8 +180,6 @@ The app will be running at `http://localhost:8080` with hot module reloading ena
 
 ## 🗄️ Database Schema
 
-## 🗄️ Database Schema
-
 The following tables are required in your Supabase database. Run these SQL commands in the Supabase SQL Editor:
 
 ### Profiles Table
@@ -275,8 +273,6 @@ VALUES
 ```
 
 ---
-
-## 💻 Development Workflow
 
 ## 💻 Development Workflow
 
