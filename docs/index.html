@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futcerto - Revolucionando Reservas de Quadras</title>
+    <meta name="description" content="Encontre e reserve quadras de futebol em Curitiba com facilidade. Plataforma moderna conectando jogadores e quadras.">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --vibrant-green: #00ff41;
+            --dark-green: #00cc33;
+            --darker-green: #009926;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-text: #1a1a1a;
+            --medium-gray: #666666;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--white);
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: var(--white);
+            border: 3px solid var(--vibrant-green);
+            border-radius: 50px;
+            padding: 8px 12px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 4px 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            color: var(--dark-text);
+        }
+
+        .lang-btn.active {
+            background: var(--vibrant-green);
+            color: var(--dark-text);
+            transform: scale(1.1);
+        }
+
+        .lang-btn:hover {
+            background: rgba(0, 255, 65, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--vibrant-green) 0%, var(--darker-green) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '⚽';
+            position: absolute;
+            font-size: 400px;
+            opacity: 0.1;
+            top: -100px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(10deg); }
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            color: var(--white);
+            margin-bottom: 30px;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 40px;
+            line-height: 1.4;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--white);
+            color: var(--darker-green);
+            padding: 20px 50px;
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 4px solid var(--white);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+            background: var(--light-gray);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 20px;
+            background: var(--white);
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            text-align: center;
+            color: var(--darker-green);
+            margin-bottom: 70px;
+            letter-spacing: -1px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 40px;
+            border: 4px solid var(--vibrant-green);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 255, 65, 0.3);
+            border-color: var(--darker-green);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--darker-green);
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            font-size: 1.1rem;
+            color: var(--medium-gray);
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, var(--light-gray) 0%, var(--white) 100%);
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            line-height: 1.8;
+            color: var(--dark-text);
+            margin-bottom: 30px;
+        }
+
+        /* Vision Section */
+        .vision {
+            padding: 100px 20px;
+            background: var(--darker-green);
+            color: var(--white);
+        }
+
+        .vision-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .vision-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 40px;
+            color: var(--white);
+        }
+
+        .vision-text {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .vision-list {
+            text-align: left;
+            display: inline-block;
+            margin: 30px 0;
+        }
+
+        .vision-item {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 600;
+            padding: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .vision-item::before {
+            content: '⚡';
+            font-size: 2rem;
+        }
+
+        /* Collaboration Section */
+        .collaborate {
+            padding: 100px 20px;
+            background: var(--vibrant-green);
+            text-align: center;
+        }
+
+        .collaborate-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: var(--dark-text);
+            margin-bottom: 30px;
+        }
+
+        .collaborate-text {
+            font-size: clamp(1.1rem, 2vw, 1.5rem);
+            color: var(--dark-text);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+            font-weight: 600;
+        }
+
+        .github-button {
+            display: inline-block;
+            background: var(--dark-text);
+            color: var(--white);
+            padding: 20px 50px;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 100px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .github-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+            background: #000;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            background: var(--dark-text);
+            color: var(--white);
+            text-align: center;
+        }
+
+        footer p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .lang-toggle {
+                top: 10px;
+                right: 10px;
+            }
+
+            .hero {
+                padding: 80px 15px 40px;
+            }
+
+            .features, .about, .vision, .collaborate {
+                padding: 60px 15px;
+            }
+
+            .vision-item {
+                font-size: 1rem;
+            }
+        }
+
+        /* Language-specific content */
+        [data-lang="en"] .pt-only,
+        [data-lang="pt"] .en-only {
+            display: none;
+        }
+    </style>
+</head>
+<body data-lang="pt">
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLanguage('pt')" data-lang-btn="pt">🇧🇷 PT</button>
+        <button class="lang-btn" onclick="setLanguage('en')" data-lang-btn="en">🇺🇸 EN</button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="pt-only">FUTCERTO</h1>
+            <h1 class="en-only">FUTCERTO</h1>
+            
+            <p class="subtitle pt-only">
+                Revolucionando a forma como você encontra e reserva quadras de futebol em Curitiba
+            </p>
+            <p class="subtitle en-only">
+                Revolutionizing how you find and book soccer courts in Curitiba
+            </p>
+            
+            <a href="https://github.com/leonardobora/futcerto-v-0-1" class="cta-button pt-only">
+                🚀 Explore o Projeto
+            </a>
+            <a href="https://github.com/leonardobora/futcerto-v-0-1" class="cta-button en-only">
+                🚀 Explore the Project
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title pt-only">O Que Torna o Futcerto Especial</h2>
+        <h2 class="section-title en-only">What Makes Futcerto Special</h2>
+        
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🗺️</div>
+                <h3 class="feature-title pt-only">Mapa Interativo</h3>
+                <h3 class="feature-title en-only">Interactive Map</h3>
+                <p class="feature-description pt-only">
+                    Visualize todas as quadras disponíveis em um mapa interativo. Encontre as quadras mais próximas de você com apenas um clique.
+                </p>
+                <p class="feature-description en-only">
+                    Visualize all available courts on an interactive map. Find the nearest courts with just one click.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3 class="feature-title pt-only">Reservas Simplificadas</h3>
+                <h3 class="feature-title en-only">Simplified Bookings</h3>
+                <p class="feature-description pt-only">
+                    Sistema intuitivo de reservas em tempo real. Escolha seu horário, confirme e jogue. Simples assim!
+                </p>
+                <p class="feature-description en-only">
+                    Intuitive real-time booking system. Choose your time, confirm, and play. It's that simple!
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title pt-only">Preços Transparentes</h3>
+                <h3 class="feature-title en-only">Transparent Pricing</h3>
+                <p class="feature-description pt-only">
+                    Compare preços e escolha a melhor opção para você. Sem surpresas, sem taxas escondidas.
+                </p>
+                <p class="feature-description en-only">
+                    Compare prices and choose the best option for you. No surprises, no hidden fees.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title pt-only">Tecnologia Moderna</h3>
+                <h3 class="feature-title en-only">Modern Technology</h3>
+                <p class="feature-description pt-only">
+                    Construído com React, TypeScript e Supabase. Interface rápida, responsiva e confiável.
+                </p>
+                <p class="feature-description en-only">
+                    Built with React, TypeScript, and Supabase. Fast, responsive, and reliable interface.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <h3 class="feature-title pt-only">Seguro e Confiável</h3>
+                <h3 class="feature-title en-only">Secure & Reliable</h3>
+                <p class="feature-description pt-only">
+                    Autenticação segura e proteção de dados. Suas informações estão sempre protegidas.
+                </p>
+                <p class="feature-description en-only">
+                    Secure authentication and data protection. Your information is always safe.
+                </p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title pt-only">Mobile First</h3>
+                <h3 class="feature-title en-only">Mobile First</h3>
+                <p class="feature-description pt-only">
+                    Funciona perfeitamente em qualquer dispositivo. Reserve pelo celular, tablet ou computador.
+                </p>
+                <p class="feature-description en-only">
+                    Works perfectly on any device. Book from your phone, tablet, or computer.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="about-content">
+            <h2 class="section-title pt-only">Sobre o Projeto</h2>
+            <h2 class="section-title en-only">About the Project</h2>
+            
+            <p class="about-text pt-only">
+                <strong>Futcerto</strong> nasceu da necessidade de simplificar a busca e reserva de quadras de futebol em Curitiba. 
+                Em uma cidade apaixonada pelo esporte, encontrar a quadra perfeita não deveria ser complicado.
+            </p>
+            <p class="about-text en-only">
+                <strong>Futcerto</strong> was born from the need to simplify finding and booking soccer courts in Curitiba. 
+                In a city passionate about sports, finding the perfect court shouldn't be complicated.
+            </p>
+            
+            <p class="about-text pt-only">
+                Nossa plataforma conecta jogadores às melhores quadras da cidade, oferecendo uma experiência 
+                moderna, intuitiva e completamente digital. Tudo o que você precisa para organizar sua pelada está aqui.
+            </p>
+            <p class="about-text en-only">
+                Our platform connects players to the best courts in the city, offering a modern, 
+                intuitive, and completely digital experience. Everything you need to organize your game is here.
+            </p>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision">
+        <div class="vision-content">
+            <h2 class="vision-title pt-only">Nossa Visão do Futuro</h2>
+            <h2 class="vision-title en-only">Our Vision for the Future</h2>
+            
+            <p class="vision-text pt-only">
+                Imagine uma plataforma completa que não apenas ajuda você a reservar quadras, mas também:
+            </p>
+            <p class="vision-text en-only">
+                Imagine a complete platform that not only helps you book courts but also:
+            </p>
+
+            <div class="vision-list">
+                <div class="vision-item pt-only">Organiza torneios e campeonatos locais</div>
+                <div class="vision-item en-only">Organizes local tournaments and championships</div>
+                
+                <div class="vision-item pt-only">Conecta jogadores para formar times</div>
+                <div class="vision-item en-only">Connects players to form teams</div>
+                
+                <div class="vision-item pt-only">Integra sistemas de pagamento seguros</div>
+                <div class="vision-item en-only">Integrates secure payment systems</div>
+                
+                <div class="vision-item pt-only">Oferece estatísticas e rankings de jogadores</div>
+                <div class="vision-item en-only">Offers player statistics and rankings</div>
+                
+                <div class="vision-item pt-only">Permite avaliações e comentários de quadras</div>
+                <div class="vision-item en-only">Enables court reviews and ratings</div>
+                
+                <div class="vision-item pt-only">Expande para outras cidades do Brasil</div>
+                <div class="vision-item en-only">Expands to other cities in Brazil</div>
+            </div>
+
+            <p class="vision-text pt-only">
+                Com o desenvolvimento completo, <strong>Futcerto</strong> se tornará o aplicativo definitivo 
+                para todos os amantes do futebol em Curitiba e além!
+            </p>
+            <p class="vision-text en-only">
+                With complete development, <strong>Futcerto</strong> will become the ultimate app 
+                for all soccer lovers in Curitiba and beyond!
+            </p>
+        </div>
+    </section>
+
+    <!-- Collaboration Section -->
+    <section class="collaborate">
+        <h2 class="collaborate-title pt-only">Vamos Construir Juntos!</h2>
+        <h2 class="collaborate-title en-only">Let's Build Together!</h2>
+        
+        <p class="collaborate-text pt-only">
+            Este projeto tem um potencial incrível e está aberto para colaboração! 
+            Se você é desenvolvedor, designer, ou simplesmente apaixonado por futebol e tecnologia, 
+            sua contribuição é muito bem-vinda.
+        </p>
+        <p class="collaborate-text en-only">
+            This project has incredible potential and is open for collaboration! 
+            If you're a developer, designer, or simply passionate about soccer and technology, 
+            your contribution is very welcome.
+        </p>
+        
+        <a href="https://github.com/leonardobora/futcerto-v-0-1" class="github-button pt-only">
+            🤝 Contribuir no GitHub
+        </a>
+        <a href="https://github.com/leonardobora/futcerto-v-0-1" class="github-button en-only">
+            🤝 Contribute on GitHub
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p class="pt-only">
+            © 2024 Futcerto - Conectando jogadores e quadras em Curitiba ⚽
+        </p>
+        <p class="en-only">
+            © 2024 Futcerto - Connecting players and courts in Curitiba ⚽
+        </p>
+    </footer>
+
+    <script>
+        function setLanguage(lang) {
+            document.body.setAttribute('data-lang', lang);
+            
+            // Update button states
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lang-btn="${lang}"]`).classList.add('active');
+            
+            // Store preference
+            localStorage.setItem('preferred-language', lang);
+        }
+
+        // Load saved language preference
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'pt';
+            setLanguage(savedLang);
+        });
+    </script>
+</body>
+</html>
