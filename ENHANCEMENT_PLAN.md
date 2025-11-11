@@ -1,5 +1,7 @@
 # Soccer Match Scheduling MVP Enhancement Plan - Curitiba
 
+> **Note:** This document contains an earlier enhancement plan. For the current MVP architecture and implementation guidelines using open-source technologies, please refer to [MVP_ARCHITECTURE.md](./MVP_ARCHITECTURE.md).
+
 ## Executive Summary
 Transform the current basic court booking system into a comprehensive soccer match scheduling platform that connects players, court managers, and facilities across Curitiba.
 
